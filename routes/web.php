@@ -10,6 +10,7 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
+Route::get('apiml', 'TesMandiriController@ml');
 
 Route::get('/','AuthController@login')->name('ndasmu');
 

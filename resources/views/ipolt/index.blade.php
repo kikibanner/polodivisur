@@ -36,7 +36,7 @@
         </div>
         <div class="card-content">
             <h4 class="card-title">Status Anda</h4>
-            @if($user->gejala == null)
+            @if($user->result == null)
             Anda Belum Melakukan Tes Mandiri
             @else
             <div class="row">
@@ -56,9 +56,16 @@
                     <tr>
                       <th scope="row">Diagnosis</th>
                       <td>
-                        <span class="badge badge-red">PDP</span>
-                        <span class="badge badge-yello">ODP</span>
-                        <span class="badge badge-green">OTG</span>
+                        @if(auth()->user()->result == 2)
+                        <br>
+                        <span class="alert alert-danger">PDP</span>
+                        @elseif(auth()->user()->result == 1)
+                        <br>
+                        <span class="alert alert-warning">ODP</span>
+                        @elseif(auth()->user()->result == 0)
+                        <br>
+                        <span class="alert alert-success">OTG</span>
+                        @endif
                       </td>
                     </tr>
                   </tbody>
@@ -67,7 +74,7 @@
               <div class="col-md-6">
                 <div class="row">
                   <div class="col-md-12">
-                    Rumah Sakit Terdekat : 
+                    Rumah Sakit Terdekat :
                   </div>
                 </div>
                 <div class="row">

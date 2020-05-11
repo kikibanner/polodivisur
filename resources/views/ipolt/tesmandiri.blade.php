@@ -48,7 +48,26 @@
               </label>
           </div>-->
           <div class="form-group">
-            <input type="textarea" class="form-control" name="gejala" placeholder="Tuliskan Gejala Anda">
+            Jenis Kelamin
+            <div class="radio">
+                <label>
+                    <input type="radio" name="jenis_kelamin" checked="true" value="pria"> Laki-laki
+                </label>
+            </div>
+            <div class="radio">
+                <label>
+                    <input type="radio" name="jenis_kelamin" value="wanita"> Perempuan
+                </label>
+            </div>
+          </div>
+          <div class="form-group">
+            Usia(dalam tahun)<input type="number" class="form-control" name="usia" placeholder="usia">
+          </div>
+          <div class="form-group">
+            Hari Sakit<input type="number" class="form-control" name="hari_sakit" placeholder="">
+          </div>
+          <div class="form-group">
+            Tuliskan Gejala Anda (Contoh : Batuk,pilek,demam)<input type="texfield" class="form-control" name="gejala" placeholder="">
           </div>
           <button type="submit" class="btn btn-warning">Simpan</button>
         </form>
