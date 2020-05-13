@@ -48,12 +48,26 @@ class TesMandiriController extends Controller
       $user = \App\User::find($id);
       $user->gejala = $gejala;
       $user->result = $result;
-      $ip = '50.90.0.1';
+      $ip = '202.80.212.141';
       $data = \Location::get($ip);
       $user->latitude = $data->latitude;
       $user->longitude = $data->longitude;
+
+      $parameter_rs = $user->latitude.','.$user->longitude.','.$id;
+      $client_rs = new \GuzzleHttp\Client();
+      $request_rs = $client_rs->get('http://13.76.142.69:5000/rs/'.$parameter_rs);
+      $response_rs = json_decode($request_rs->getBody()->getContents());
+      $id_rs =  $response_rs->rsid;
+
+      $rs = \App\Rs::find($id_rs);
+      $user->lat_rs = $rs->latitude;
+      $user->long_rs = $rs->longitude;
+      $user->nama_rs = $rs->name;
+
       $user->save();
       $user->update();
+
+      #dd($user->latitude);
       return redirect('\dashboard');
     }
 

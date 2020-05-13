@@ -56,10 +56,10 @@
                     <tr>
                       <th scope="row">Diagnosis</th>
                       <td>
-                        @if(auth()->user()->result == 2)
+                        @if(auth()->user()->result == 1)
                         <br>
                         <span class="alert alert-danger">PDP</span>
-                        @elseif(auth()->user()->result == 1)
+                        @elseif(auth()->user()->result == 2)
                         <br>
                         <span class="alert alert-warning">ODP</span>
                         @elseif(auth()->user()->result == 0)
@@ -74,7 +74,7 @@
               <div class="col-md-6">
                 <div class="row">
                   <div class="col-md-12">
-                    Rumah Sakit Terdekat :
+                    Rumah Sakit Terdekat : {{$user->nama_rs}}
                   </div>
                 </div>
                 <div class="row">
@@ -118,11 +118,11 @@
                   </tr>
               </thead>
               <tbody>
-                  @foreach($rs as $rs)
+                  @foreach($rs as $rs2)
                   <tr>
                       <td >{{ $loop->iteration  }}</td>
-                      <td>{{ $rs->name }}</td>
-                      <td>{{ $rs->address }}</td>
+                      <td>{{ $rs2->name }}</td>
+                      <td>{{ $rs2->address }}</td>
                   </tr>
                   @endforeach
               </tbody>
@@ -130,7 +130,7 @@
         </div>
         <div class="card-footer">
           <div class="pull-right">
-            <a href="#" class="btn btn-rose btn-simple">Selengkapnya</a>
+            <a href="#" class="btn btn-rose btn-simple" data-toggle="modal" data-target="#rs">Selengkapnya</a>
           </div>
         </div>
     </div>
@@ -144,26 +144,86 @@
             <i class="material-icons">dashboard</i>
         </div>
         <div class="card-content">
-            <h4 class="card-title">Update COVID-19 Surabaya</h4>
+            <h4 class="card-title">Update COVID-19</h4>
         </div>
         <div class="card-content dukurepodo">
-          lekassembuh
+          <iframe src="https://ourworldindata.org/grapher/total-cases-covid-19?tab=map" width="100%" height="600px"></iframe>
         </div>
           <div class="card-footer">
             <div class="pull-right">
-              <a href="#" class="btn btn-rose btn-simple">Selengkapnya</a>
+              <a href="#" class="btn btn-rose btn-simple" data-toggle="modal" data-target="#map">Selengkapnya</a>
             </div>
           </div>
     </div>
 
   </div>
 
+  <!-- Classic Modal -->
+  <div class="modal fade" id="map" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+          <div class="modal-content">
+              <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                      <i class="material-icons">clear</i>
+                  </button>
+                  <h4 class="modal-title">Update COVID-19</h4>
+              </div>
+              <div class="modal-body">
+                  <iframe src="https://ourworldindata.org/grapher/total-cases-covid-19?tab=map" width="100%" height="600px"></iframe>
+              </div>
+              <div class="modal-footer">
+                  <button type="button" class="btn btn-danger btn-simple" data-dismiss="modal">Close</button>
+              </div>
+          </div>
+      </div>
+  </div>
+  <!--  End Modal -->
+
+  <!-- Classic Modal -->
+  <div class="modal fade" id="rs" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+          <div class="modal-content">
+              <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                      <i class="material-icons">clear</i>
+                  </button>
+                  <h4 class="modal-title">DaftarRumah Sakit yang Menangani COOVID-19 di Surabaya</h4>
+              </div>
+              <div class="modal-body">
+                <table class="table table-striped table-bordered" id="example">
+                    <thead>
+                        <tr>
+                            <th >No.</th>
+                            <th>Nama</th>
+                            <th>Alamat</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach($rs as $rs)
+                        <tr>
+                            <td >{{ $loop->iteration  }}</td>
+                            <td>{{ $rs->name }}</td>
+                            <td>{{ $rs->address }}</td>
+                        </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+              </div>
+              <div class="modal-footer">
+                  <button type="button" class="btn btn-danger btn-simple" data-dismiss="modal">Close</button>
+              </div>
+          </div>
+      </div>
+  </div>
+  <!--  End Modal -->
+
 </div>
+
 
 
 <script>
 
-	var mymap = L.map('mapid').setView([-7.268448 , 112.758128], 13);
+	var mymap = L.map('mapid').setView([ {{$user->lat_rs}} , {{$user->long_rs}} ], 13);
 
 	L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw', {
 		maxZoom: 18,
@@ -175,7 +235,7 @@
 		zoomOffset: -1
 	}).addTo(mymap);
 
-	L.marker([-7.268448 , 112.758128]).addTo(mymap)
+	L.marker([{{$user->lat_rs}} , {{$user->long_rs}}]).addTo(mymap)
 		.bindPopup("<b>Rumah Sakit Terdekat</b><br />").openPopup();
 
 

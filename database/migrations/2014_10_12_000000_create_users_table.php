@@ -27,6 +27,10 @@ class CreateUsersTable extends Migration
             $table->string('usia')->nullable();
             $table->string('hari_sakit')->nullable();
             $table->string('result')->nullable();
+            $table->double('lat_rs')->nullable();
+            $table->double('long_rs')->nullable();
+            $table->string('rs_terdekat')->nullable();
+            $table->string('nama_rs')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });
