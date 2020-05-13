@@ -35,7 +35,7 @@ class TesMandiriController extends Controller
     public function simpan(Request $request,$id)
     {
       $gejala = $request->gejala;
-      $gejala = str_replace(' ', '', $gejala);
+      $gejala = str_replace(' ', '%20', $gejala);
       $umur = $request->usia;
       $kelamin = $request->jenis_kelamin;
       $id = $request->id;

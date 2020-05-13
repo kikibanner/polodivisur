@@ -51,7 +51,7 @@
                   <tbody>
                     <tr>
                       <th scope="row">Gejala</th>
-                      <td>{{ $user->gejala }}</td>
+                      <td>{{ str_replace('%20', ' ', $user->gejala ) }}</td>
                     </tr>
                     <tr>
                       <th scope="row">Diagnosis</th>
